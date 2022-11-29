@@ -8,7 +8,7 @@ import { Result } from "../models/result-model";
 
 @Injectable()
 export class TaskEndpointService extends EndpointFactory {
-    private readonly _getBaseUrl = `${environment.baseAPIUrl}todo`;
+  private readonly _getBaseUrl = `${environment.baseAPIUrl}todo`;
 
   constructor(protected override http: HttpClient, injector: Injector) {
     super(http, injector);
@@ -16,5 +16,24 @@ export class TaskEndpointService extends EndpointFactory {
 
   public getList(): Observable<Result> {
     return this.http.get<Result>(this._getBaseUrl, this.getRequestHeaders());
+  }
+
+  public get(taskId: number): Observable<Result> {
+    return this.http.get<Result>(`${this._getBaseUrl}/${taskId}`, this.getRequestHeaders());
+  }
+
+  public add(addItemRequest: Task): Observable<any> {
+    return this.http.post(this._getBaseUrl, addItemRequest, this.getRequestHeaders());
+  }
+
+  public edit(editItemRequest: Task): Observable<any> {
+    return this.http.put(
+      this._getBaseUrl + editItemRequest.id,
+      editItemRequest,
+      this.getRequestHeaders());
+  }
+
+  public delete(taskId: number): Observable<any> {
+    return this.http.delete<Result>(`${this._getBaseUrl}/${taskId}`, this.getRequestHeaders());
   }
 }
