@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { TaskService } from "../../services/task.service";
 import { MatTableDataSource } from "@angular/material/table";
 import { Task } from "../../models/task-model";
 import { TaskStatus } from "../../models/task-status-model";
+import { Subscription } from "rxjs";
 
 @Component({
     selector: 'task',
@@ -17,8 +18,10 @@ export class TaskComponent implements OnInit {
         "description",
         "dueDate",
         "isDone",
-        "status"
+        "status",
+        "actions"
     ];
+    sourceCommandChangeSub$ = new Subscription();
 
     constructor(
         private taskService: TaskService
@@ -36,16 +39,21 @@ export class TaskComponent implements OnInit {
             });
     }
 
+    get getTasksFunction() {
+        return this.getTasks.bind(this);
+    }
+
     defineTaskStatus(tasks: Task[]): void {
-        
         tasks.forEach(task => {
-            task.status = this.setStatus(task);
+            let currentDate = new Date();
+            task.status = this.setStatus(task, currentDate);
+            task.canComplete = this.setCanComplete(task, currentDate);
         });
     }
 
-    setStatus(task: Task): string {
+    setStatus(task: Task, currentDate: Date): string {
         let result = TaskStatus.Completed.toString();
-        let currentDate = new Date();
+
         let dueDate = new Date(task.dueDate);
         let timeDifferenceInHours = Math.abs(dueDate.getTime().valueOf()
             - currentDate.getTime().valueOf())
@@ -63,5 +71,10 @@ export class TaskComponent implements OnInit {
         }
 
         return result;
+    }
+
+    setCanComplete(task: Task, currentDate: Date): boolean {
+        let dueDate = new Date(task.dueDate);
+        return !task.isDone && dueDate > currentDate;
     }
 }

@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { TaskEndpointService } from "../endpoint-services/task-endpoint.service";
+import { CreateTask } from "../models/create-task-model";
+import { EditTask } from "../models/edit-task-model";
 import { Result } from "../models/result-model";
-import { Task } from "../models/task-model";
+import { TaskEndpointService } from "./endpoint-services/task-endpoint.service";
 
 @Injectable()
 export class TaskService {
@@ -17,11 +18,11 @@ export class TaskService {
     return this.taskEndpointService.get(taskId);
   }
 
-  createTask(addItemRequest: Task): Observable<any> {
+  createTask(addItemRequest: CreateTask): Observable<any> {
     return this.taskEndpointService.add(addItemRequest);
   }
 
-  editTask(addItemRequest: Task): Observable<any> {
+  editTask(addItemRequest: EditTask): Observable<any> {
     return this.taskEndpointService.edit(addItemRequest);
   }
 
