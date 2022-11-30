@@ -6,7 +6,7 @@ import { TaskStatus } from "../../models/task-status-model";
 import { Subscription } from "rxjs";
 
 @Component({
-    selector: 'task',
+    selector: 'tasks',
     templateUrl: './task.component.html',
     styleUrls: ['./task.component.scss']
 })
