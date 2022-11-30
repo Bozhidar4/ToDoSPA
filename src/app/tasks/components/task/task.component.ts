@@ -17,11 +17,11 @@ export class TaskComponent implements OnInit {
         "name",
         "description",
         "dueDate",
-        "isDone",
         "status",
         "actions"
     ];
     sourceCommandChangeSub$ = new Subscription();
+    timeThreshold: number = 12;
 
     constructor(
         private taskService: TaskService
@@ -46,8 +46,10 @@ export class TaskComponent implements OnInit {
     defineTaskStatus(tasks: Task[]): void {
         tasks.forEach(task => {
             let currentDate = new Date();
+            let dueDate = new Date(task.dueDate);
             task.status = this.setStatus(task, currentDate);
-            task.canComplete = this.setCanComplete(task, currentDate);
+            task.canComplete = this.setCanComplete(dueDate, currentDate, task.isDone);
+            task.canDelete = this.setCanDelete(dueDate, currentDate, task.isDone);
         });
     }
 
@@ -64,7 +66,7 @@ export class TaskComponent implements OnInit {
                 result = TaskStatus.Expired.toString();
             }
             else {
-                result = timeDifferenceInHours > 12
+                result = timeDifferenceInHours > this.timeThreshold
                     ? TaskStatus.TwelveHoursOrMoreRemaining.toString()
                     : TaskStatus.LessThan12hRemaining.toString();
             }
@@ -73,8 +75,16 @@ export class TaskComponent implements OnInit {
         return result;
     }
 
-    setCanComplete(task: Task, currentDate: Date): boolean {
-        let dueDate = new Date(task.dueDate);
-        return !task.isDone && dueDate > currentDate;
+    // Keep the below two methods separate for better flexibility 
+    // as they may have different logic in future
+    // Currently both actions have same logic as per my understanding:
+    // Complete task - when task is not overdue and obviously not completed
+    // Delete task - when task is not completed and not past the due date
+    setCanComplete(dueDate: Date, currentDate: Date, isDone: boolean): boolean {
+        return !isDone && dueDate > currentDate;
+    }
+
+    setCanDelete(dueDate: Date, currentDate: Date, isDone: boolean): boolean {
+        return !isDone && dueDate > currentDate;
     }
 }

@@ -1,6 +1,6 @@
 <button mat-mini-fab color="primary" [disabled]="!canComplete()" (click)="onCompleteClick()">
   <mat-icon>check_circle</mat-icon>
 </button>
-<button mat-mini-fab color="warn" class="ml-10" (click)="onDeleteClick()">
+<button mat-mini-fab color="warn" [disabled]="!canDelete()" (click)="onDeleteClick()">
   <mat-icon>delete</mat-icon>
 </button>

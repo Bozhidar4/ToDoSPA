@@ -6,4 +6,5 @@ export interface Task {
     isDone: boolean;
     status: string;
     canComplete: boolean;
+    canDelete: boolean;
   }

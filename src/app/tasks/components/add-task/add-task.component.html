@@ -10,16 +10,14 @@
         <div class="form-input-container">
             <mat-form-field>
                 <mat-label>Description</mat-label>
-                <input matInput placeholder="Description"
-                    formControlName="description" maxlength="500" required>
+                <input matInput placeholder="Description" formControlName="description" maxlength="500" required>
                 <mat-error *ngIf="description.hasError('required')">Description is required</mat-error>
             </mat-form-field>
         </div>
         <div class="form-input-container">
             <mat-form-field>
                 <mat-label>Due In</mat-label>
-                <input matInput placeholder="Due In" type="number" min="1" max="1000" step="1"
-                    formControlName="dueIn" required>
+                <input matInput placeholder="Due In" type="number" min="1" max="1000" step="1" formControlName="dueIn" required>
                 <mat-error *ngIf="dueIn.hasError('required')">Due In is required</mat-error>
             </mat-form-field>
         </div>

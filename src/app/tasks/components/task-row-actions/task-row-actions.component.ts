@@ -24,8 +24,11 @@ export class TaskRowActionsComponent {
     onDeleteClick() {
         this.taskService.deleteTask(this.task.id)
             .subscribe({
-                next: () => { this.getTasks(); this.toastrService.success(`${this.successMessage} deleted`) },
-                error: () => { this.toastrService.error(`${this.errorMessage} delete the task`) }
+                next: () => {
+                    this.getTasks();
+                    this.toastrService.success(`${this.successMessage} deleted`);
+                },
+                error: () => { this.toastrService.error(`${this.errorMessage} delete the task`); }
             });
     }
 
@@ -41,12 +44,19 @@ export class TaskRowActionsComponent {
 
         this.taskService.editTask(taskToEdit)
             .subscribe({
-                next: () => { this.getTasks(); this.toastrService.success(`${this.successMessage} marked as completed`) },
-                error: () => { this.toastrService.error(`${this.errorMessage} edit the task`) }
+                next: () => {
+                    this.getTasks();
+                    this.toastrService.success(`${this.successMessage} marked as completed`);
+                },
+                error: () => { this.toastrService.error(`${this.errorMessage} edit the task`); }
             });
     }
 
     canComplete() {
         return this.task.canComplete;
+    }
+
+    canDelete() {
+        return this.task.canDelete;
     }
 }

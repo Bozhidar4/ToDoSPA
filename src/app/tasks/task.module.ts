@@ -12,8 +12,6 @@ import { TaskRowActionsComponent } from "./components/task-row-actions/task-row-
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AddTaskComponent } from "./components/add-task/add-task.component";
 import { MatInputModule } from "@angular/material/input";
-import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MatNativeDateModule } from "@angular/material/core";
 import { TaskEndpointService } from "./services/endpoint-services/task-endpoint.service";
 
 @NgModule({
@@ -32,9 +30,7 @@ import { TaskEndpointService } from "./services/endpoint-services/task-endpoint.
     MatFormFieldModule,
     MatInputModule,
     MatButtonToggleModule,
-    BrowserAnimationsModule,
-    MatDatepickerModule,
-    MatNativeDateModule
+    BrowserAnimationsModule
   ],
   exports: [
     TaskComponent,
